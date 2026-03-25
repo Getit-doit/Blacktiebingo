@@ -13,7 +13,9 @@ const currentNumber = document.getElementById("currentNumber");
 const callCard = document.getElementById("callCard");
 const boardGrid = document.getElementById("boardGrid");
 const statusMessage = document.getElementById("statusMessage");
+const fullscreenButton = document.getElementById("fullscreenButton");
 const resetButton = document.getElementById("resetButton");
+const introOverlay = document.getElementById("introOverlay");
 
 let state = loadState();
 
@@ -201,6 +203,41 @@ function resetBoard() {
   setStatus("Board reset. Ready for the next call.");
 }
 
+function updateFullscreenButton() {
+  if (!fullscreenButton) {
+    return;
+  }
+
+  fullscreenButton.textContent = document.fullscreenElement ? "Exit Full Screen" : "Full Screen";
+}
+
+async function toggleFullscreen() {
+  try {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen();
+      return;
+    }
+
+    await document.documentElement.requestFullscreen();
+  } catch (_error) {
+    setStatus("Fullscreen is not available in this browser.");
+  }
+}
+
+function runIntro() {
+  if (!introOverlay) {
+    return;
+  }
+
+  window.setTimeout(() => {
+    document.body.classList.add("intro-finished");
+    window.setTimeout(() => {
+      introOverlay.remove();
+      document.body.classList.remove("intro-active", "intro-finished");
+    }, 950);
+  }, 3000);
+}
+
 boardGrid.addEventListener("click", (event) => {
   const chip = event.target.closest(".board-number");
   if (!chip || chip.classList.contains("called")) {
@@ -212,6 +249,10 @@ boardGrid.addEventListener("click", (event) => {
 });
 
 resetButton.addEventListener("click", resetBoard);
+fullscreenButton.addEventListener("click", toggleFullscreen);
+document.addEventListener("fullscreenchange", updateFullscreenButton);
 
 buildBoard();
 renderState();
+updateFullscreenButton();
+runIntro();

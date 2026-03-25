@@ -34,6 +34,36 @@ body {
   position: relative;
 }
 
+.intro-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  display: grid;
+  place-items: center;
+  z-index: 20;
+  pointer-events: all;
+}
+
+.intro-logo {
+  width: min(70vw, 34rem);
+  height: auto;
+  filter: brightness(1.18) contrast(1.08);
+  transform-origin: center center;
+}
+
+body.intro-active {
+  overflow: hidden;
+}
+
+body.intro-finished .intro-overlay {
+  animation: introFadeOut 900ms ease forwards;
+  pointer-events: none;
+}
+
+body.intro-finished .intro-logo {
+  animation: introLogoShrink 900ms cubic-bezier(0.2, 0.82, 0.15, 1.02) forwards;
+}
+
 body::before {
   content: "";
   position: fixed;
@@ -169,12 +199,17 @@ body::before {
     radial-gradient(circle at top, rgba(255, 234, 186, 0.12), transparent 50%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
   border: 1px solid rgba(255, 231, 177, 0.14);
-  padding: 1.5rem;
+  padding: 2rem;
+  overflow: visible;
 }
 
 .hero-logo {
-  width: min(100%, 12rem);
+  display: block;
+  width: min(100%, 10rem);
+  max-width: 100%;
+  max-height: 100%;
   height: auto;
+  object-fit: contain;
   filter: brightness(1.18) contrast(1.08);
 }
 
@@ -471,6 +506,27 @@ button:active {
   }
 }
 
+@keyframes introLogoShrink {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-22vw, -16vh, 0) scale(0.28);
+    opacity: 0;
+  }
+}
+
+@keyframes introFadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
 @keyframes ballDrop {
   0% {
     transform: scale(0.78) translateY(-34px) rotate(-14deg);
@@ -524,6 +580,17 @@ button:active {
 
   .hero-showcase {
     grid-template-columns: 1fr;
+  }
+
+  @keyframes introLogoShrink {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate3d(0, -18vh, 0) scale(0.24);
+      opacity: 0;
+    }
   }
 }
 
