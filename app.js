@@ -16,8 +16,7 @@ const statusMessage = document.getElementById("statusMessage");
 const fullscreenButton = document.getElementById("fullscreenButton");
 const resetButton = document.getElementById("resetButton");
 const introOverlay = document.getElementById("introOverlay");
-const introLogo = document.getElementById("introLogo");
-const introEnter = document.getElementById("introEnter");
+const introLogoRing = document.getElementById("introLogoRing");
 
 let state = loadState();
 
@@ -239,8 +238,7 @@ function runIntro() {
     }, 950);
   }
 
-  introLogo?.addEventListener("click", finishIntro, { once: true });
-  introEnter?.addEventListener("click", finishIntro, { once: true });
+  introLogoRing?.addEventListener("click", finishIntro, { once: true });
 }
 
 boardGrid.addEventListener("click", (event) => {
