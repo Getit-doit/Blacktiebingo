@@ -7,9 +7,6 @@ const columns = [
 ];
 
 const storageKey = "bingo-roll-display-state";
-const channelName = "bingo-roll-display";
-const pageType = document.body.dataset.page || "display";
-const channel = typeof BroadcastChannel !== "undefined" ? new BroadcastChannel(channelName) : null;
 
 const currentLetter = document.getElementById("currentLetter");
 const currentNumber = document.getElementById("currentNumber");
@@ -56,16 +53,9 @@ function loadState() {
 function persistState() {
   state.lastUpdated = Date.now();
   window.localStorage.setItem(storageKey, JSON.stringify(state));
-  if (channel) {
-    channel.postMessage(state);
-  }
 }
 
 function buildBoard() {
-  if (!boardGrid) {
-    return;
-  }
-
   boardGrid.innerHTML = "";
 
   columns.forEach((column) => {
@@ -95,17 +85,7 @@ function buildBoard() {
   });
 }
 
-function setStatus(message) {
-  if (statusMessage) {
-    statusMessage.textContent = message;
-  }
-}
-
 function triggerReveal() {
-  if (!callCard) {
-    return;
-  }
-
   callCard.classList.remove("call-reveal");
   void callCard.offsetWidth;
   callCard.classList.add("call-reveal");
@@ -119,11 +99,11 @@ function getEntryKey(entry) {
   return `${entry.letter}-${entry.number}`;
 }
 
-function renderBoard() {
-  if (!boardGrid) {
-    return;
-  }
+function setStatus(message) {
+  statusMessage.textContent = message;
+}
 
+function renderBoard() {
   const calledSet = new Set(state.calledNumbers.map(getEntryKey));
 
   boardGrid.querySelectorAll(".board-number").forEach((chip) => {
@@ -136,10 +116,6 @@ function renderBoard() {
 }
 
 function renderCurrentCall(options = {}) {
-  if (!currentLetter || !currentNumber) {
-    return;
-  }
-
   if (!state.currentCall) {
     currentLetter.textContent = "?";
     currentNumber.textContent = "--";
@@ -157,6 +133,17 @@ function renderCurrentCall(options = {}) {
 function renderState(options = {}) {
   renderCurrentCall(options);
   renderBoard();
+}
+
+function markLatestChipFresh(entry) {
+  const chip = boardGrid.querySelector(`[data-value="${getEntryKey(entry)}"]`);
+  if (!chip) {
+    return;
+  }
+
+  chip.classList.remove("fresh");
+  void chip.offsetWidth;
+  chip.classList.add("fresh");
 }
 
 function validateEntry(letter, number) {
@@ -184,21 +171,6 @@ function validateEntry(letter, number) {
   }
 
   return { valid: true, value: numericValue };
-}
-
-function markLatestChipFresh(entry) {
-  if (!boardGrid) {
-    return;
-  }
-
-  const chip = boardGrid.querySelector(`[data-value="${getEntryKey(entry)}"]`);
-  if (!chip) {
-    return;
-  }
-
-  chip.classList.remove("fresh");
-  void chip.offsetWidth;
-  chip.classList.add("fresh");
 }
 
 function addCall(letter, number) {
@@ -230,64 +202,15 @@ function resetBoard() {
   setStatus("Board reset. Ready for the next call.");
 }
 
-function applyIncomingState(nextState, options = {}) {
-  if (!nextState || !Array.isArray(nextState.calledNumbers)) {
-    return;
+manualCallForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  if (addCall(letterSelect.value, numberInput.value)) {
+    numberInput.value = "";
+    numberInput.focus();
   }
+});
 
-  const previousKey = state.currentCall ? getEntryKey(state.currentCall) : null;
-  const nextKey = nextState.currentCall ? getEntryKey(nextState.currentCall) : null;
-
-  state = {
-    currentCall: nextState.currentCall ?? null,
-    calledNumbers: nextState.calledNumbers,
-    lastUpdated: nextState.lastUpdated ?? Date.now(),
-  };
-
-  renderState({ animate: options.animate && previousKey !== nextKey });
-
-  if (nextState.currentCall && previousKey !== nextKey) {
-    markLatestChipFresh(nextState.currentCall);
-  }
-}
-
-function initializeControlPage() {
-  if (!manualCallForm || !letterSelect || !numberInput || !resetButton) {
-    return;
-  }
-
-  manualCallForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    if (addCall(letterSelect.value, numberInput.value)) {
-      numberInput.value = "";
-      numberInput.focus();
-    }
-  });
-
-  resetButton.addEventListener("click", resetBoard);
-}
-
-function initializeSync() {
-  window.addEventListener("storage", (event) => {
-    if (event.key !== storageKey || !event.newValue) {
-      return;
-    }
-
-    try {
-      applyIncomingState(JSON.parse(event.newValue), { animate: pageType === "display" });
-    } catch (_error) {
-      // Ignore invalid cross-tab updates.
-    }
-  });
-
-  if (channel) {
-    channel.addEventListener("message", (event) => {
-      applyIncomingState(event.data, { animate: pageType === "display" });
-    });
-  }
-}
+resetButton.addEventListener("click", resetBoard);
 
 buildBoard();
 renderState();
-initializeControlPage();
-initializeSync();

@@ -84,14 +84,9 @@ body::before {
   z-index: 1;
 }
 
-.app-shell-control {
-  width: min(720px, calc(100% - 2rem));
-  grid-template-columns: 1fr;
-}
-
 .hero-panel,
-.control-panel,
-.board-panel {
+.board-panel,
+.control-bar {
   position: relative;
   background: var(--panel);
   border: 1px solid var(--panel-border);
@@ -102,8 +97,8 @@ body::before {
 }
 
 .hero-panel::before,
-.control-panel::before,
-.board-panel::before {
+.board-panel::before,
+.control-bar::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -291,16 +286,6 @@ body::before {
   padding: 1.5rem;
 }
 
-.control-panel {
-  max-width: 520px;
-}
-
-.control-panel-standalone {
-  max-width: none;
-  grid-column: 1 / -1;
-  margin-top: 4rem;
-}
-
 .panel-head {
   display: flex;
   align-items: center;
@@ -394,6 +379,21 @@ button:active {
 
 .board-panel {
   grid-column: 1 / -1;
+}
+
+.control-bar {
+  position: sticky;
+  bottom: 1rem;
+  grid-column: 1 / -1;
+  padding: 1rem 1.25rem;
+  display: grid;
+  gap: 0.85rem;
+  z-index: 2;
+}
+
+.manual-call-form-compact {
+  grid-template-columns: minmax(110px, 130px) minmax(140px, 180px) auto auto;
+  align-items: end;
 }
 
 .board-grid {
@@ -539,10 +539,6 @@ button:active {
   .hero-showcase {
     grid-template-columns: 1fr;
   }
-
-  .control-panel {
-    max-width: none;
-  }
 }
 
 @media (max-width: 760px) {
@@ -553,8 +549,8 @@ button:active {
   }
 
   .hero-panel,
-  .control-panel,
-  .board-panel {
+  .board-panel,
+  .control-bar {
     border-radius: 22px;
   }
 
@@ -567,7 +563,8 @@ button:active {
     min-height: 18rem;
   }
 
-  .manual-call-form {
+  .manual-call-form,
+  .manual-call-form-compact {
     grid-template-columns: 1fr;
   }
 
