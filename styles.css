@@ -125,6 +125,10 @@ body::before {
   gap: 1.5rem;
 }
 
+.hero-copy {
+  width: 100%;
+}
+
 .hero-copy h1,
 .panel-head h2 {
   font-family: "Cormorant Garamond", serif;
@@ -136,7 +140,8 @@ body::before {
   font-size: clamp(4.75rem, 8vw, 7.5rem);
   line-height: 0.9;
   text-transform: uppercase;
-  max-width: 12ch;
+  width: 100%;
+  max-width: none;
 }
 
 .eyebrow,
@@ -347,8 +352,6 @@ button:active {
 }
 
 .control-bar {
-  position: sticky;
-  bottom: 1rem;
   grid-column: 1 / -1;
   padding: 1rem 1.25rem;
   display: flex;
