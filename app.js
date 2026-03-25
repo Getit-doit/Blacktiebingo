@@ -16,6 +16,8 @@ const statusMessage = document.getElementById("statusMessage");
 const fullscreenButton = document.getElementById("fullscreenButton");
 const resetButton = document.getElementById("resetButton");
 const introOverlay = document.getElementById("introOverlay");
+const introLogo = document.getElementById("introLogo");
+const introEnter = document.getElementById("introEnter");
 
 let state = loadState();
 
@@ -229,13 +231,16 @@ function runIntro() {
     return;
   }
 
-  window.setTimeout(() => {
+  function finishIntro() {
     document.body.classList.add("intro-finished");
     window.setTimeout(() => {
       introOverlay.remove();
       document.body.classList.remove("intro-active", "intro-finished");
     }, 950);
-  }, 3000);
+  }
+
+  introLogo?.addEventListener("click", finishIntro, { once: true });
+  introEnter?.addEventListener("click", finishIntro, { once: true });
 }
 
 boardGrid.addEventListener("click", (event) => {
