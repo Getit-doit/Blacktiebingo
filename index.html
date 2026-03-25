@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bingo Roll Display</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body data-page="display">
+    <div class="stage-lights stage-lights-left"></div>
+    <div class="stage-lights stage-lights-right"></div>
+
+    <main class="app-shell">
+      <section class="hero-panel">
+        <div class="hero-copy">
+          <p class="eyebrow">Black Tie Bingo</p>
+          <h1>Called Ball Reveal</h1>
+        </div>
+
+        <div class="current-call-card" id="callCard">
+          <div class="bingo-ball-stage">
+            <div class="bingo-ball">
+              <div class="ball-shine"></div>
+              <div class="ball-core">
+                <div class="call-letter" id="currentLetter">?</div>
+                <div class="call-number" id="currentNumber">--</div>
+              </div>
+            </div>
+          </div>
+          <div class="sparkle-ring sparkle-ring-one"></div>
+          <div class="sparkle-ring sparkle-ring-two"></div>
+        </div>
+      </section>
+
+      <section class="board-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">Full Board</p>
+            <h2>All called numbers</h2>
+          </div>
+        </div>
+        <div class="board-grid" id="boardGrid"></div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
