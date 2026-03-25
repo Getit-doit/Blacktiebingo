@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bingo Roll Display</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="stage-lights stage-lights-left"></div>
+    <div class="stage-lights stage-lights-right"></div>
+
+    <main class="app-shell">
+      <section class="hero-panel">
+        <div class="hero-copy">
+          <p class="eyebrow">Black Tie Bingo</p>
+          <h1>Vegas Night Roll Display</h1>
+          <p class="subcopy">
+            Showcase the latest bingo call with a dramatic reveal, then keep every
+            past number visible at a glance.
+          </p>
+        </div>
+
+        <div class="current-call-card" id="callCard">
+          <div class="marquee-frame">
+            <div class="call-letter" id="currentLetter">?</div>
+            <div class="call-number-wrap">
+              <span class="call-number" id="currentNumber">--</span>
+              <span class="call-pill" id="currentBall">Awaiting Call</span>
+            </div>
+          </div>
+          <div class="sparkle-ring sparkle-ring-one"></div>
+          <div class="sparkle-ring sparkle-ring-two"></div>
+        </div>
+      </section>
+
+      <section class="control-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">Call Controls</p>
+            <h2>Run the board live</h2>
+          </div>
+          <button class="ghost-button" id="resetButton" type="button">Reset</button>
+        </div>
+
+        <form class="manual-call-form" id="manualCallForm">
+          <label>
+            Letter
+            <select id="letterSelect" aria-label="Bingo letter">
+              <option value="B">B</option>
+              <option value="I">I</option>
+              <option value="N">N</option>
+              <option value="G">G</option>
+              <option value="O">O</option>
+            </select>
+          </label>
+
+          <label>
+            Number
+            <input
+              id="numberInput"
+              type="number"
+              min="1"
+              max="75"
+              placeholder="1-75"
+              inputmode="numeric"
+            />
+          </label>
+
+          <button class="gold-button" type="submit">Call Number</button>
+        </form>
+
+        <div class="quick-actions">
+          <button class="gold-button wide" id="randomButton" type="button">
+            Draw Random Ball
+          </button>
+        </div>
+
+        <p class="status-message" id="statusMessage" aria-live="polite">
+          Ready for the next call.
+        </p>
+      </section>
+
+      <section class="history-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">Recent Calls</p>
+            <h2>Most recent first</h2>
+          </div>
+          <span class="history-count" id="historyCount">0 called</span>
+        </div>
+        <div class="history-list" id="historyList"></div>
+      </section>
+
+      <section class="board-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">Full Board</p>
+            <h2>All called numbers</h2>
+          </div>
+        </div>
+        <div class="board-grid" id="boardGrid"></div>
+      </section>
+    </main>
+
+    <template id="historyItemTemplate">
+      <article class="history-chip">
+        <span class="history-letter"></span>
+        <span class="history-number"></span>
+      </article>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
