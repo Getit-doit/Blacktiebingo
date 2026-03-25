@@ -58,36 +58,12 @@
       </section>
 
       <section class="control-bar">
-        <form class="manual-call-form manual-call-form-compact" id="manualCallForm">
-          <label>
-            Letter
-            <select id="letterSelect" aria-label="Bingo letter">
-              <option value="B">B</option>
-              <option value="I">I</option>
-              <option value="N">N</option>
-              <option value="G">G</option>
-              <option value="O">O</option>
-            </select>
-          </label>
-
-          <label>
-            Number
-            <input
-              id="numberInput"
-              type="number"
-              min="1"
-              max="75"
-              placeholder="1-75"
-              inputmode="numeric"
-            />
-          </label>
-
-          <button class="gold-button" type="submit">Call Number</button>
+        <div class="control-bar-actions">
           <button class="ghost-button" id="resetButton" type="button">Reset</button>
-        </form>
+        </div>
 
         <p class="status-message" id="statusMessage" aria-live="polite">
-          Ready for the next call.
+          Click a number on the board to call it.
         </p>
       </section>
     </main>

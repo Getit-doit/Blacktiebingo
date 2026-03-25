@@ -13,9 +13,6 @@ const currentNumber = document.getElementById("currentNumber");
 const callCard = document.getElementById("callCard");
 const boardGrid = document.getElementById("boardGrid");
 const statusMessage = document.getElementById("statusMessage");
-const manualCallForm = document.getElementById("manualCallForm");
-const letterSelect = document.getElementById("letterSelect");
-const numberInput = document.getElementById("numberInput");
 const resetButton = document.getElementById("resetButton");
 
 let state = loadState();
@@ -73,8 +70,10 @@ function buildBoard() {
     numbers.className = "board-numbers";
 
     for (let value = column.min; value <= column.max; value += 1) {
-      const chip = document.createElement("div");
+      const chip = document.createElement("button");
       chip.className = "board-number";
+      chip.type = "button";
+      chip.setAttribute("aria-label", `Call ${column.letter}-${value}`);
       chip.textContent = String(value);
       chip.dataset.value = `${column.letter}-${value}`;
       numbers.appendChild(chip);
@@ -202,12 +201,14 @@ function resetBoard() {
   setStatus("Board reset. Ready for the next call.");
 }
 
-manualCallForm.addEventListener("submit", (event) => {
-  event.preventDefault();
-  if (addCall(letterSelect.value, numberInput.value)) {
-    numberInput.value = "";
-    numberInput.focus();
+boardGrid.addEventListener("click", (event) => {
+  const chip = event.target.closest(".board-number");
+  if (!chip || chip.classList.contains("called")) {
+    return;
   }
+
+  const [letter, number] = chip.dataset.value.split("-");
+  addCall(letter, Number(number));
 });
 
 resetButton.addEventListener("click", resetBoard);

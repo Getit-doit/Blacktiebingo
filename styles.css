@@ -168,7 +168,7 @@ body::before {
 }
 
 .hero-logo {
-  width: min(100%, 24rem);
+  width: min(100%, 12rem);
   height: auto;
   filter: brightness(1.18) contrast(1.08);
 }
@@ -281,7 +281,6 @@ body::before {
   animation: pulseRing 4s ease-in-out infinite 1.5s;
 }
 
-.control-panel,
 .board-panel {
   padding: 1.5rem;
 }
@@ -298,42 +297,8 @@ body::before {
   font-size: 2rem;
 }
 
-.manual-call-form {
-  display: grid;
-  grid-template-columns: minmax(110px, 140px) 1fr auto;
-  gap: 0.9rem;
-  align-items: end;
-}
-
-.manual-call-form label {
-  display: grid;
-  gap: 0.45rem;
-  color: var(--muted);
-  font-size: 0.92rem;
-}
-
-select,
-input,
 button {
   font: inherit;
-}
-
-select,
-input {
-  width: 100%;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 231, 177, 0.18);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text);
-  padding: 0.95rem 1rem;
-  outline: none;
-  transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
-}
-
-select:focus,
-input:focus {
-  border-color: rgba(255, 231, 177, 0.45);
-  box-shadow: 0 0 0 4px rgba(255, 231, 177, 0.08);
 }
 
 button {
@@ -386,14 +351,18 @@ button:active {
   bottom: 1rem;
   grid-column: 1 / -1;
   padding: 1rem 1.25rem;
-  display: grid;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: 0.85rem;
   z-index: 2;
 }
 
-.manual-call-form-compact {
-  grid-template-columns: minmax(110px, 130px) minmax(140px, 180px) auto auto;
-  align-items: end;
+.control-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .board-grid {
@@ -435,6 +404,7 @@ button:active {
 }
 
 .board-number {
+  appearance: none;
   border-radius: 14px;
   border: 1px solid rgba(255, 231, 177, 0.08);
   background: var(--chip);
@@ -443,12 +413,24 @@ button:active {
   display: grid;
   place-items: center;
   font-weight: 600;
+  cursor: pointer;
   transition:
     background 200ms ease,
     color 200ms ease,
     border-color 200ms ease,
     box-shadow 200ms ease,
     transform 200ms ease;
+}
+
+.board-number:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 231, 177, 0.22);
+}
+
+.board-number:focus-visible {
+  outline: 0;
+  box-shadow: 0 0 0 4px rgba(255, 231, 177, 0.12);
+  border-color: rgba(255, 231, 177, 0.35);
 }
 
 .board-number.called {
@@ -458,6 +440,7 @@ button:active {
   border-color: rgba(255, 231, 177, 0.35);
   color: var(--text);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  cursor: default;
 }
 
 .board-number.fresh {
@@ -563,9 +546,8 @@ button:active {
     min-height: 18rem;
   }
 
-  .manual-call-form,
-  .manual-call-form-compact {
-    grid-template-columns: 1fr;
+  .control-bar {
+    align-items: stretch;
   }
 
   .board-grid {
