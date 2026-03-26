@@ -238,28 +238,35 @@ body::before {
   border: 1px solid rgba(255, 231, 177, 0.14);
   padding: 2rem;
   overflow: visible;
+  position: relative;
 }
 
 .logo-card::before {
   content: "";
   position: absolute;
-  inset: 14% 12% 10%;
-  border-radius: 42px;
+  inset: 12% 10% 8%;
+  border-radius: 44px;
   background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.74) 58%, rgba(255, 255, 255, 0) 100%);
-  filter: blur(18px);
-  opacity: 0.98;
+    radial-gradient(circle at center, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.56) 46%, rgba(255, 255, 255, 0.18) 72%, rgba(255, 255, 255, 0) 100%);
+  filter: blur(24px);
+  opacity: 1;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .logo-card::after {
   content: "";
   position: absolute;
-  inset: 20% 16% 16%;
-  border-radius: 34px;
-  background: rgba(255, 255, 255, 0.9);
+  inset: 18% 14% 14%;
+  border-radius: 38px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.82));
   box-shadow:
-    0 0 32px rgba(255, 255, 255, 0.34),
-    0 0 70px rgba(255, 255, 255, 0.12);
+    0 0 36px rgba(255, 255, 255, 0.18),
+    0 0 82px rgba(255, 255, 255, 0.1);
+  opacity: 0.94;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .hero-logo {
@@ -274,68 +281,16 @@ body::before {
   filter: brightness(1.18) contrast(1.08);
 }
 
-.logo-card::before,
-.logo-card::after {
-  pointer-events: none;
-  z-index: 0;
-}
-
 .logo-bowtie {
   position: absolute;
   left: 50%;
-  bottom: 20%;
-  width: 7rem;
-  height: 2.8rem;
+  bottom: 14%;
+  width: 7.4rem;
+  height: 2.6rem;
   transform: translateX(-50%);
   background: #060606;
-  clip-path: polygon(0 50%, 34% 0, 50% 50%, 66% 0, 100% 50%, 66% 100%, 50% 50%, 34% 100%);
+  clip-path: polygon(0 0, 45% 50%, 0 100%, 100% 100%, 55% 50%, 100% 0);
   z-index: 1;
-}
-
-.logo-card::after,
-.logo-card::before {
-  pointer-events: none;
-}
-
-
-.logo-card::after,
-.logo-card::before {
-  border-radius: 28px;
-}
-
-.logo-card > .hero-logo {
-  width: min(100%, 10rem);
-}
-
-.logo-card::after {
-  background: rgba(255, 255, 255, 0.9);
-}
-
-.logo-card::before {
-  background:
-    radial-gradient(circle, rgba(255, 255, 255, 0.94) 0%, rgba(255, 255, 255, 0.74) 58%, rgba(255, 255, 255, 0) 100%);
-}
-
-.logo-card {
-  position: relative;
-}
-
-.logo-card > .hero-logo {
-  position: relative;
-}
-
-.logo-card-bowtie,
-.logo-card::after,
-.logo-card::before {
-  pointer-events: none;
-}
-
-.logo-card::after {
-  clip-path: inset(0 round 28px);
-}
-
-.logo-card::before {
-  clip-path: inset(0 round 36px);
 }
 
 .logo-card::after,
